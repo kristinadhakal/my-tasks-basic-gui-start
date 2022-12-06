@@ -50,19 +50,21 @@ function toggleTask() {
 
 // Remove a task by index
 function removeTask() {
-  let index = +prompt("nter # of task:");
+  let index = +prompt("Enter # of task:");
   if (index >= 0 && index < tasks.length) {
     // Valid Index -> remove
-    task.splice(index, 1);
+    tasks.splice(index, 1);
     saveTasks();
     displayAll();
   } else {
-    alert("Invalid Task #"); 
+    alert("Invalid Task #");
   }
 }
-
+// clear all tasks
 function clearAll() {
-  console.log("Clear All");
+  tasks = [];
+  saveTasks();
+  displayAll();
 }
 
 // Helper functions
