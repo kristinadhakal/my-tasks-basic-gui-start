@@ -1,41 +1,85 @@
 // My Tasks Basic
 
 // HTML Elements
-let goBtnEl = document.getElementById('go-btn');
-let menuEl = document.getElementById('menu');
-let tasksEl = document.getElementById('tasks');
+let goBtnEl = document.getElementById("go-btn");
+let menuEl = document.getElementById("menu");
+let tasksEl = document.getElementById("tasks");
+
+// Global Variables
+let tasks = loadTasks();
+displayAll();
 
 // Go Btn - Menu Listener
-goBtnEl.addEventListener('click', goBtnHandler);
+goBtnEl.addEventListener("click", goBtnHandler);
 
 function goBtnHandler() {
   // Get Menu Selection
   let selection = menuEl.value;
 
-  if (selection === 'add') {
+  if (selection === "add") {
     addTask();
-  } else if (selection === 'toggle') {
+  } else if (selection === "toggle") {
     toggleTask();
-  } else if (selection === 'remove') {
+  } else if (selection === "remove") {
     removeTask();
-  } else if (selection === 'clear') {
+  } else if (selection === "clear") {
     clearAll();
   }
 }
 
 // MENU FUNCTIONS
 function addTask() {
-  console.log('Add Task');
+  let description = prompt("Enter task description:");
+  tasks.push(newTask(description));
+  saveTasks();
+  displayAll();
 }
 
+// Toggle completetd status of a task
 function toggleTask() {
-  console.log('Toggle Task');
+  let index = prompt("Enter # of task:");
+  let tasks = tasks[index];
 }
 
 function removeTask() {
-  console.log('Remove Task');
+  console.log("Remove Task");
 }
 
 function clearAll() {
-  console.log('Clear All');
+  console.log("Clear All");
+}
+
+// Helper functions
+// Return a new taskk object
+function newTask(taskDescription) {
+  return {
+    description: taskDescription,
+    completed: "",
+  };
+}
+// Display all task in global tasks array
+function displayAll() {
+  let outputStr = "";
+  for (let i = 0; i < tasks.length; i++) {
+    outputStr += getTaskHTMLStr(tasks[i], i);
+  }
+  tasksEl.innerHTML = outputStr;
+}
+
+// get thml for given task
+function getTaskHTMLStr(task, i) {
+  return ` <div>
+  ${i}: ${task.description}
+  </div>`;
+}
+
+// save globall tasks to local storage
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// load tasks from local storage
+function loadTasks() {
+  let taskStr = localStorage.getItem("tasks");
+  return JSON.parse(taskStr) ?? [];
 }
