@@ -44,6 +44,7 @@ function toggleTask() {
   } else {
     task.completed = "";
   }
+  saveTasks();
   displayAll();
 }
 
@@ -51,7 +52,12 @@ function toggleTask() {
 function removeTask() {
   let index = +prompt("nter # of task:");
   if (index >= 0 && index < tasks.length) {
-    // Valid Index
+    // Valid Index -> remove
+    task.splice(index, 1);
+    saveTasks();
+    displayAll();
+  } else {
+    alert("Invalid Task #"); 
   }
 }
 
