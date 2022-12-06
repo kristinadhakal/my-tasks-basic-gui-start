@@ -38,11 +38,21 @@ function addTask() {
 // Toggle completetd status of a task
 function toggleTask() {
   let index = prompt("Enter # of task:");
-  let tasks = tasks[index];
+  let task = tasks[index];
+  if (task.completed === "") {
+    task.completed = "completed";
+  } else {
+    task.completed = "";
+  }
+  displayAll();
 }
 
+// Remove a task by index
 function removeTask() {
-  console.log("Remove Task");
+  let index = +prompt("nter # of task:");
+  if (index >= 0 && index < tasks.length) {
+    // Valid Index
+  }
 }
 
 function clearAll() {
@@ -68,7 +78,7 @@ function displayAll() {
 
 // get thml for given task
 function getTaskHTMLStr(task, i) {
-  return ` <div>
+  return ` <div class="${task.completed}" >
   ${i}: ${task.description}
   </div>`;
 }
